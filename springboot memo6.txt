@@ -1,0 +1,25 @@
+Restful Api 설계 가이드
+1. Richardson Maturity Model
+2. Best Practices // 주의 사항
+
+
+1. Richardson 의 성숙도 모델
+Level2 
+읽기 전용 : GET
+새로운 리소스 추가 : Post
+기존 리소스 변경 : Put
+리소스 삭제 : delete
+
+=> 기존의 CRUD와 mapping된다.
+
+2. Best Practices // 주의 사항
+개발자 수단이 아닌 사용자 입장으로 설계해야한다
+uri를 작성할때 복수형태로 명시하는 것이 좋다
+users > user
+명사를 사용할 것
+
+파라미터와 헤더값을 이용해서 데이터 호출을 조절해라
+uri에서 구분하지 못하게!
+
+
+https://github.com/edowon/restful-web-service

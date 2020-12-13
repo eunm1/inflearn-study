@@ -1,0 +1,39 @@
+https://github.com/edowon/restful-web-service
+
+@around
+@anotation
+
+
+spring reference에서 ioc, event, aop testing제외하고 모든 것이 추상화이다.
+
+spring boot 설정 방법
+application.yml  = application.properties
+.yml이 가독성이 좋아 많이 사용된다.
+
+.properties -> logging.level.org.springframework = debug
+
+. yml ->
+
+logging :
+  level : 
+     org.springframework : debug
+
+=> logging message를 디버그로 출력하는 코드..
+
+
+dispatcherServlet : 사용자의 요청을 처리하는 것
+중앙집중식의 게이트..활용을 위한
+
+이를 통해 결과값을 반환하는 것을 dispatcherServletAutoConfiguration
+
+HttpMessageConvertersAutoConfiguration : json포멧을 데이터를 변환시켜 클라이언트에게 전달
+
+restcontroller : 데이터 포멧의 형태를 가짐
+view를 갖지 않아 spring mvc에서 사용하는 view형태의 페이지 생성할 필요 없이 클라이언트의 요청값을 json포멧으로 전달한다
+view를 가지지 않는 controller를 restcontroller라고 한다
+
+path variable : 가변데이터를 보내는 것...
+**정확히 조사하기
+
+
+chrom json viewer 사용하면 크롬에서 json결과값을 이쁘게 볼수 있다.

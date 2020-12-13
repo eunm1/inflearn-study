@@ -1,0 +1,108 @@
+JPA(인터페이스)
+java persistence api
+자바 ORM기술에 대한 api표준 명세
+자바 어플리게이션에서 관계형 데이터베이스를 사용하는 방식을 정의한 인터페이스
+entitiy Manager를 통해 CRUD 처리
+
+hibernate ( jpa를 사용한 라이브러리)
+객체 관계 맵필 프레임워크
+jpa의 구현체, 인터페이스를 직접구현한 라이브러리
+생산성, 유지보수, 비종속성 (직관적, 집중적)
+
+spring data jpa
+spring module
+jpa를 추상화한 reppoitory 인터페이스 제공
+
+
+spring data jpa
+jpa
+hibernate
+jdbc
+
+의 구조
+
+
+
+우리는 h2데이터베이스를 사용할 것이다.
+pom.xml
+<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+콘솔에 h2.console을 검색하면 h2를 사용한다는 것을 알수있다.
+localhost:8080/h2-console을 검색하면 로그인 페이지가 나온다
+이전시간의 아이디와 패스워드를 작성하면 된다.
+다음 나온 창에서 jdbc url은 기본값으로 변경한다 : jdbc:h2:mem:testdb
+testconnection을 하면 에러가 생기는데 이것은 security때문이며
+이를 해결하기 위해서는 없애는 방법도 있지만 그대로 유지하고 싶다면
+securityconfig클래스에 특별한 함수를 추가한다
+
+이 함수는 아이디 패스워드를 묻지 않는다
+
+ jdbc:h2:mem:testdb
+mem : memory , 기동되는 동안에만 사용하겠다는 의미
+지금은 테스트를 위한 것이기 때문에 mem을 사용하겠다
+
+
+spring data jpa를 이요한 entity 설정과 초기 데이터 생성
+User클래스에 새로운 어노테이션과 db를 불러오기 위한 id를 설정한다
+application.yml파일에서 어떤 쿼리가 사용되었는지 알수있도록 true설정한다 // jpa로그가 출력된다
+console에 create table을 검색하면 user 테이블이 생성된다.
+서버를 통해 h2db에 들어가면 user테이블이 생성되어있음을 확인할 수 있다
+
+초기데이터 설정
+resource 파일에 새로운 파일을 생성한다 확장자는 sql
+임의로 data.sql로 하겠다
+데이터 쿼리를 통해 데이터를 작성한다
+console을 통해 insert into를 검색하면 해당 내용이 나온다
+서버를 통해 h2db에 user테이블에 데이터가 있음을 알 수 있다
+
+jpa를 사용할 수 있는 controller와
+서비스 역할을 하는 repository(interface)를 생성하겠다.
+내용을 추가하고 postman에서 
+authorization을 설정하고 검색한다
+
+개별 사용자 조회를 위한 설정을 하겠다.
+repository에서 상속 클래스로 이동하고 상속클래스의 상속클래스로 이동하면서 사용할 수있는 것이 무엇인지 확인한다
+
+
+jpa를 이용한 사용자 추가와 삭제
+post/delete http method
+* 
+delete : postman에서 delete method를 사용해서 localhost:8088/jpa/users/1을 보낸다
+*
+create user - post 형식으로 바디에 json형식으로 데이터를 작성하고 
+localhost:8088/jpa/users를 작동한다.
+데이터를 추가할때, 초기 데이터와 id충돌이 발생할 수 있다.
+- 초기데이터 값에 임의의 값을 넣는 방법
+- jpa에서 적절하게 핸들링하거나
+- id값을 초기 데이터의 개수에서 + 1하는 방법도 있다.
+
+
+게시물 조회를 위한 post entity와 user entity와의 관계 설정
+* post라는 도메인 클래스 생성
+* User에서 post 변수 생성
+localhost:8088/h2-console에서 post도메인이 추가되었는지 확인
+
+post도메인의 데이터를 가져오는 메소드 생성(controller)
+data.sql에서 post에 데이터를 추가한다, 마지막 값은 user에 있는 id값을 넣어야 한다
+post도메인과 user도메인에 적절한 코드를 작성한다 (테이블 형식)
+h2-console에서 확인한다
+
+게시물 조회를 위한 post Entity와 User Entity와의 관계 설정
+UserjpaController에 url를 추가한다
+localhost:8088/jpa/users/90001/posts
+localhost:8088/jpa/users
+
+jpa를 통한 새로운 데이터 추가
+post entity를 이용해서 새로운 게시물을 작성할 수 있는 api 추가한다
+PostRepository라는 interface 생성
+
+//삭제 메소드도 스스로 해봐라
+//코드는 github에

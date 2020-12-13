@@ -1,0 +1,33 @@
+CustomizedResponseEntityExceptionHandler 클래스에서 
+
+extends ResponseEntityExceptionHandler를 ctrl누르고 클릭한다.
+그럼 해당 핸들러의 클래스로 이동하는데 
+
+ctrl+f 로 handleMethodargumentnotvalid 검색해서 해당 메서스 복사
+protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        return this.handleExceptionInternal(ex, (Object)null, headers, status, request);
+    }
+
+다시 원래 행들러 클래스로 돌아와서 재정의한다.
+
+valid는 post http사용
+다국언어는 get사용
+
+다국어 사용시 다른 언어값을 불러오기 위해서 header에서 key : Accept-Language value : fr or en을 적는다
+
+글자가 깨진다면 setting에서 file incoding을 utf-8로 변경한다.
+
+ postman에서 /users에게 key : Accept , value : application/xml을 보내ㄴ다면
+(응답값을 json이 아니라 xml로 보내달라고 요청할때) 
+아직 설정을 하지 않아서 406이 뜰텐데
+이를 처리할수 있는 라이브러리를 추가한다
+
+pom.xml or build.gradle에서 
+<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<scope>2.10.2</scope>
+		</dependency>
+를 추가한다
+xml처리를 도와준다
+
